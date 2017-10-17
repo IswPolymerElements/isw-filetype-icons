@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>isw-responsive demo</title>
+
+	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+	<link rel="import" href="../../paper-styles/demo-pages.html">
+	<link rel="import" href="../../paper-styles/color.html">
+	<link rel="import" href="../../iron-meta/iron-meta.html">
+	<link rel="import" href="../../iron-icon/iron-icon.html">
+
+	<link rel="import" href="../isw-filetype-icons.html">
+</head>
+<body>
+<dom-module id="demo-element-view">
+	<template>
+		<style>
+			:host {
+				font-family: 'Roboto', 'Noto', sans-serif;
+				line-height: 1.5;
+				background-color: #FFFFFF;
+
+				--primary-color: #00508C;
+				--accent-color: var(--paper-light-green-500);
+			}
+			.container {
+				display: inline-block;
+				width: 10em;
+				margin: 1em 0.5em;
+				text-align: center;
+			}
+			.container > div {
+				margin-top: 0.5em;
+				color: black;
+				font-size: 10px;
+			}
+			iron-icon {
+				fill: var(--paper-grey-700);
+				transition: all 0.2s;
+				-webkit-transition: all 0.2s;
+			}
+			iron-icon:hover {
+				fill: var(--accent-color);
+			}
+		</style>
+
+		<template is="dom-repeat" items="{{icons}}">
+			<span class="container">
+				<iron-icon icon="{{item}}"></iron-icon>
+				<div>{{item}}</div>
+			</span>
+		</template>
+	</template>
+
+	<script>
+		HTMLImports.whenReady( function() {
+			class DemoElementView extends Polymer.Element {
+				static get is() { return 'demo-element-view'; }
+
+				static get properties() {
+					return {
+						icons: {
+							type: Array,
+							notify: true
+						}
+					}
+				}
+
+				ready() {
+					super.ready();
+					this.set( 'icons', new Polymer.IronMeta( { type: 'iconset' } ).list[ 0 ].getIconNames() );
+				}
+			}
+
+			window.customElements.define( DemoElementView.is, DemoElementView );
+		} );
+	</script>
+</dom-module>
+
+<demo-element-view></demo-element-view>
+
+</body>
+</html>
